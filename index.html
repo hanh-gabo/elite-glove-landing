@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elite Glove - Premium Nitrile Gloves Manufacturer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-bg: #0d0d0d;
+            --color-bg-alt: #1a1a1a;
+            --color-bg-card: #141414;
+            --color-primary: #c9a962;
+            --color-primary-dark: #a08540;
+            --color-text: #e8e6e1;
+            --color-text-muted: #8a8780;
+            --color-border: #2a2a2a;
+            --font-serif: 'Playfair Display', Georgia, serif;
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.7;
+            font-size: 16px;
+        }
+
+        /* Editable styles */
+        [contenteditable="true"] {
+            outline: none;
+            position: relative;
+            transition: all 0.2s ease;
+        }
+
+        [contenteditable="true"]:hover {
+            background: rgba(201, 169, 98, 0.1);
+            border-radius: 4px;
+        }
+
+        [contenteditable="true"]:focus {
+            background: rgba(201, 169, 98, 0.15);
+            box-shadow: 0 0 0 2px var(--color-primary);
+            border-radius: 4px;
+        }
+
+        /* Editor Panel */
+        .editor-panel {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
+        }
+
+        .editor-btn {
+            padding: 12px 20px;
+            background: var(--color-primary);
+            color: var(--color-bg);
+            border: none;
+            border-radius: 6px;
+            font-family: var(--font-sans);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .editor-btn:hover {
+            background: var(--color-primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .editor-btn.secondary {
+            background: var(--color-bg-card);
+            color: var(--color-text);
+            border: 1px solid var(--color-border);
+        }
+
+        .editor-btn.secondary:hover {
+            background: var(--color-bg-alt);
+            border-color: var(--color-primary);
+        }
+
+        .edit-hint {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--color-primary);
+            color: var(--color-bg);
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 500;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .edit-hint.visible {
+            opacity: 1;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 20px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(180deg, rgba(13,13,13,0.95) 0%, rgba(13,13,13,0) 100%);
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            font-family: var(--font-serif);
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--color-text);
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            color: var(--color-primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--color-text-muted);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--color-primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 120px 60px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50%;
+            height: 100%;
+            background: radial-gradient(ellipse at 70% 50%, rgba(201,169,98,0.08) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 650px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            background: rgba(201,169,98,0.1);
+            border: 1px solid rgba(201,169,98,0.3);
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--color-primary);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+        }
+
+        .hero h1 {
+            font-family: var(--font-serif);
+            font-size: 64px;
+            font-weight: 500;
+            line-height: 1.1;
+            margin-bottom: 30px;
+            color: var(--color-text);
+        }
+
+        .hero h1 span {
+            color: var(--color-primary);
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: var(--color-text-muted);
+            line-height: 1.8;
+            margin-bottom: 40px;
+            max-width: 500px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .btn {
+            padding: 16px 36px;
+            font-family: var(--font-sans);
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+            color: var(--color-bg);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(201,169,98,0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--color-text);
+            border: 1px solid var(--color-border);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--color-primary);
+            color: var(--color-primary);
+        }
+
+        /* Stats Section */
+        .stats {
+            padding: 80px 60px;
+            background: var(--color-bg-alt);
+            border-top: 1px solid var(--color-border);
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .stat-number {
+            font-family: var(--font-serif);
+            font-size: 48px;
+            font-weight: 500;
+            color: var(--color-primary);
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 120px 60px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-tag {
+            display: inline-block;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--color-primary);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-family: var(--font-serif);
+            font-size: 42px;
+            font-weight: 500;
+            color: var(--color-text);
+            margin-bottom: 20px;
+        }
+
+        .section-desc {
+            font-size: 17px;
+            color: var(--color-text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border);
+            border-radius: 12px;
+            padding: 40px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            border-color: var(--color-primary);
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(201,169,98,0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            font-size: 28px;
+        }
+
+        .feature-card h3 {
+            font-family: var(--font-serif);
+            font-size: 22px;
+            font-weight: 500;
+            margin-bottom: 16px;
+            color: var(--color-text);
+        }
+
+        .feature-card p {
+            font-size: 15px;
+            color: var(--color-text-muted);
+            line-height: 1.7;
+        }
+
+        /* Products Section */
+        .products {
+            padding: 120px 60px;
+            background: var(--color-bg-alt);
+        }
+
+        .products-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .product-card {
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .product-card:hover {
+            border-color: var(--color-primary);
+            transform: translateY(-5px);
+        }
+
+        .product-image {
+            height: 240px;
+            background: linear-gradient(135deg, #1e1e1e 0%, #2a2a2a 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 64px;
+            opacity: 0.6;
+        }
+
+        .product-content {
+            padding: 30px;
+        }
+
+        .product-category {
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--color-primary);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .product-card h3 {
+            font-family: var(--font-serif);
+            font-size: 22px;
+            font-weight: 500;
+            margin-bottom: 12px;
+            color: var(--color-text);
+        }
+
+        .product-card p {
+            font-size: 14px;
+            color: var(--color-text-muted);
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .product-link {
+            color: var(--color-primary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: gap 0.3s ease;
+        }
+
+        .product-link:hover {
+            gap: 12px;
+        }
+
+        /* About Section */
+        .about {
+            padding: 120px 60px;
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .about-image {
+            height: 500px;
+            background: linear-gradient(135deg, var(--color-bg-card) 0%, var(--color-bg-alt) 100%);
+            border-radius: 12px;
+            border: 1px solid var(--color-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 120px;
+            opacity: 0.5;
+        }
+
+        .about-content h2 {
+            font-family: var(--font-serif);
+            font-size: 42px;
+            font-weight: 500;
+            margin-bottom: 30px;
+            color: var(--color-text);
+        }
+
+        .about-content p {
+            font-size: 16px;
+            color: var(--color-text-muted);
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .about-list {
+            list-style: none;
+            margin-top: 30px;
+        }
+
+        .about-list li {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px 0;
+            font-size: 15px;
+            color: var(--color-text);
+        }
+
+        .about-list li::before {
+            content: '✓';
+            width: 24px;
+            height: 24px;
+            background: rgba(201,169,98,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: var(--color-primary);
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 120px 60px;
+            background: var(--color-bg-alt);
+            text-align: center;
+        }
+
+        .contact-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact h2 {
+            font-family: var(--font-serif);
+            font-size: 42px;
+            font-weight: 500;
+            margin-bottom: 20px;
+            color: var(--color-text);
+        }
+
+        .contact p {
+            font-size: 17px;
+            color: var(--color-text-muted);
+            margin-bottom: 40px;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 16px 20px;
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            color: var(--color-text);
+            font-family: var(--font-sans);
+            font-size: 15px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--color-primary);
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: var(--color-text-muted);
+        }
+
+        /* Footer */
+        footer {
+            padding: 60px;
+            border-top: 1px solid var(--color-border);
+            text-align: center;
+        }
+
+        .footer-logo {
+            font-family: var(--font-serif);
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--color-text);
+            margin-bottom: 20px;
+        }
+
+        .footer-logo span {
+            color: var(--color-primary);
+        }
+
+        .footer-text {
+            font-size: 14px;
+            color: var(--color-text-muted);
+        }
+
+        /* Decorative Elements */
+        .gold-line {
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--color-primary), transparent);
+            margin: 0 auto 20px auto;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .features-grid,
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .about {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 20px 30px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                padding: 100px 30px;
+            }
+
+            .hero h1 {
+                font-size: 42px;
+            }
+
+            .features,
+            .products,
+            .about,
+            .contact {
+                padding: 80px 30px;
+            }
+
+            .features-grid,
+            .products-grid,
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .editor-panel {
+                top: 10px;
+                right: 10px;
+            }
+
+            .editor-btn {
+                padding: 10px 16px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Editor Panel -->
+    <div class="editor-panel">
+        <button class="editor-btn secondary" onclick="toggleEditMode()">
+            <span id="editIcon">✏️</span>
+            <span id="editText">Edit Mode</span>
+        </button>
+        <button class="editor-btn" onclick="saveContent()">
+            💾 Save
+        </button>
+        <button class="editor-btn secondary" onclick="exportHTML()">
+            📥 Export
+        </button>
+    </div>
+
+    <div class="edit-hint" id="editHint">Click any text to edit • Changes auto-save locally</div>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="#" class="logo"><span>Elite</span>Glove</a>
+        <ul class="nav-links">
+            <li><a href="#features">Features</a></li>
+            <li><a href="#products">Products</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge" contenteditable="true" data-key="hero-badge">Premium Quality Since 2010</div>
+            <h1 contenteditable="true" data-key="hero-title">Precision Protection for <span>Healthcare</span> Professionals</h1>
+            <p contenteditable="true" data-key="hero-desc">Experience unparalleled comfort and durability with our premium nitrile gloves. Engineered for those who demand excellence in every procedure.</p>
+            <div class="hero-buttons">
+                <a href="#products" class="btn btn-primary">Explore Products</a>
+                <a href="#contact" class="btn btn-outline">Request Quote</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-number" contenteditable="true" data-key="stat-1-num">15+</div>
+                <div class="stat-label" contenteditable="true" data-key="stat-1-label">Years Experience</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" contenteditable="true" data-key="stat-2-num">50M+</div>
+                <div class="stat-label" contenteditable="true" data-key="stat-2-label">Gloves Produced</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" contenteditable="true" data-key="stat-3-num">120+</div>
+                <div class="stat-label" contenteditable="true" data-key="stat-3-label">Countries Served</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" contenteditable="true" data-key="stat-4-num">99.9%</div>
+                <div class="stat-label" contenteditable="true" data-key="stat-4-label">Quality Rate</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="section-header">
+            <div class="gold-line"></div>
+            <div class="section-tag" contenteditable="true" data-key="features-tag">Why Choose Us</div>
+            <h2 class="section-title" contenteditable="true" data-key="features-title">Exceptional Quality Standards</h2>
+            <p class="section-desc" contenteditable="true" data-key="features-desc">Every glove undergoes rigorous testing to ensure maximum protection and comfort for healthcare professionals worldwide.</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🛡️</div>
+                <h3 contenteditable="true" data-key="feature-1-title">Superior Protection</h3>
+                <p contenteditable="true" data-key="feature-1-desc">Advanced barrier technology provides exceptional protection against pathogens, chemicals, and contaminants.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">✨</div>
+                <h3 contenteditable="true" data-key="feature-2-title">Premium Comfort</h3>
+                <p contenteditable="true" data-key="feature-2-desc">Ergonomic design with soft inner lining ensures all-day comfort during extended procedures.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <h3 contenteditable="true" data-key="feature-3-title">Tactile Sensitivity</h3>
+                <p contenteditable="true" data-key="feature-3-desc">Ultra-thin fingertip technology maintains dexterity for precise instrument handling.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🌿</div>
+                <h3 contenteditable="true" data-key="feature-4-title">Eco-Friendly</h3>
+                <p contenteditable="true" data-key="feature-4-desc">Sustainable manufacturing processes minimize environmental impact without compromising quality.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔬</div>
+                <h3 contenteditable="true" data-key="feature-5-title">Lab Certified</h3>
+                <p contenteditable="true" data-key="feature-5-desc">FDA approved and ISO certified to meet the highest international safety standards.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💪</div>
+                <h3 contenteditable="true" data-key="feature-6-title">Tear Resistant</h3>
+                <p contenteditable="true" data-key="feature-6-desc">Enhanced durability with proprietary nitrile formula prevents punctures and tears.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products" id="products">
+        <div class="products-container">
+            <div class="section-header">
+                <div class="gold-line"></div>
+                <div class="section-tag" contenteditable="true" data-key="products-tag">Our Collection</div>
+                <h2 class="section-title" contenteditable="true" data-key="products-title">Premium Glove Range</h2>
+                <p class="section-desc" contenteditable="true" data-key="products-desc">Discover our comprehensive range of nitrile gloves designed for various medical and industrial applications.</p>
+            </div>
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-image">🧤</div>
+                    <div class="product-content">
+                        <div class="product-category" contenteditable="true" data-key="product-1-cat">Medical Grade</div>
+                        <h3 contenteditable="true" data-key="product-1-title">Elite Pro Medical</h3>
+                        <p contenteditable="true" data-key="product-1-desc">Premium examination gloves for healthcare professionals. Powder-free with textured fingertips.</p>
+                        <a href="#contact" class="product-link">Learn More →</a>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">🧤</div>
+                    <div class="product-content">
+                        <div class="product-category" contenteditable="true" data-key="product-2-cat">Industrial</div>
+                        <h3 contenteditable="true" data-key="product-2-title">Elite Heavy Duty</h3>
+                        <p contenteditable="true" data-key="product-2-desc">Extra-thick nitrile for industrial applications. Chemical resistant with extended cuff.</p>
+                        <a href="#contact" class="product-link">Learn More →</a>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">🧤</div>
+                    <div class="product-content">
+                        <div class="product-category" contenteditable="true" data-key="product-3-cat">Laboratory</div>
+                        <h3 contenteditable="true" data-key="product-3-title">Elite Lab Series</h3>
+                        <p contenteditable="true" data-key="product-3-desc">Ultra-sensitive gloves for precision laboratory work. Low particulate for cleanroom use.</p>
+                        <a href="#contact" class="product-link">Learn More →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="about-image">🏭</div>
+        <div class="about-content">
+            <div class="section-tag" contenteditable="true" data-key="about-tag">About Elite Glove</div>
+            <h2 contenteditable="true" data-key="about-title">Crafting Excellence Since 2010</h2>
+            <p contenteditable="true" data-key="about-desc-1">Elite Glove has been at the forefront of nitrile glove manufacturing for over 15 years. Our state-of-the-art facilities and commitment to innovation have made us a trusted partner for healthcare institutions worldwide.</p>
+            <p contenteditable="true" data-key="about-desc-2">We believe in creating products that protect without compromise. Every glove we produce reflects our dedication to quality, safety, and sustainability.</p>
+            <ul class="about-list">
+                <li contenteditable="true" data-key="about-list-1">ISO 13485 & ISO 9001 Certified</li>
+                <li contenteditable="true" data-key="about-list-2">FDA Registered Manufacturer</li>
+                <li contenteditable="true" data-key="about-list-3">Sustainable Production Practices</li>
+                <li contenteditable="true" data-key="about-list-4">Global Distribution Network</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="contact-container">
+            <div class="gold-line"></div>
+            <div class="section-tag" contenteditable="true" data-key="contact-tag">Get In Touch</div>
+            <h2 contenteditable="true" data-key="contact-title">Request a Quote</h2>
+            <p contenteditable="true" data-key="contact-desc">Interested in our products? Contact our team for pricing, samples, and partnership opportunities.</p>
+            <form class="contact-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <input type="text" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" placeholder="Email Address" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="text" placeholder="Company Name">
+                </div>
+                <div class="form-group">
+                    <textarea placeholder="Your Message"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-logo"><span>Elite</span>Glove</div>
+        <p class="footer-text" contenteditable="true" data-key="footer-text">© 2025 Elite Glove Manufacturing. All rights reserved. Premium nitrile gloves for healthcare professionals.</p>
+    </footer>
+
+    <script>
+        // Edit Mode State
+        let editMode = false;
+
+        // Load saved content on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadContent();
+        });
+
+        // Toggle Edit Mode
+        function toggleEditMode() {
+            editMode = !editMode;
+            const editIcon = document.getElementById('editIcon');
+            const editText = document.getElementById('editText');
+            const hint = document.getElementById('editHint');
+
+            if (editMode) {
+                editIcon.textContent = '✅';
+                editText.textContent = 'Editing';
+                hint.classList.add('visible');
+                setTimeout(() => hint.classList.remove('visible'), 3000);
+            } else {
+                editIcon.textContent = '✏️';
+                editText.textContent = 'Edit Mode';
+                saveContent();
+            }
+        }
+
+        // Save Content to LocalStorage
+        function saveContent() {
+            const editables = document.querySelectorAll('[contenteditable="true"]');
+            const content = {};
+
+            editables.forEach(el => {
+                const key = el.getAttribute('data-key');
+                if (key) {
+                    content[key] = el.innerHTML;
+                }
+            });
+
+            localStorage.setItem('eliteGloveContent', JSON.stringify(content));
+
+            // Show save confirmation
+            const hint = document.getElementById('editHint');
+            hint.textContent = '✓ Changes saved!';
+            hint.classList.add('visible');
+            setTimeout(() => {
+                hint.classList.remove('visible');
+                hint.textContent = 'Click any text to edit • Changes auto-save locally';
+            }, 2000);
+        }
+
+        // Load Content from LocalStorage
+        function loadContent() {
+            const saved = localStorage.getItem('eliteGloveContent');
+            if (saved) {
+                const content = JSON.parse(saved);
+                Object.keys(content).forEach(key => {
+                    const el = document.querySelector(`[data-key="${key}"]`);
+                    if (el) {
+                        el.innerHTML = content[key];
+                    }
+                });
+            }
+        }
+
+        // Export HTML
+        function exportHTML() {
+            // Clone the document
+            const clone = document.documentElement.cloneNode(true);
+
+            // Remove editor elements
+            const editorPanel = clone.querySelector('.editor-panel');
+            const editHint = clone.querySelector('.edit-hint');
+            if (editorPanel) editorPanel.remove();
+            if (editHint) editHint.remove();
+
+            // Remove contenteditable attributes
+            clone.querySelectorAll('[contenteditable]').forEach(el => {
+                el.removeAttribute('contenteditable');
+                el.removeAttribute('data-key');
+            });
+
+            // Remove editor script
+            const scripts = clone.querySelectorAll('script');
+            scripts.forEach(s => s.remove());
+
+            // Create download
+            const html = '<!DOCTYPE html>\n' + clone.outerHTML;
+            const blob = new Blob([html], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'elite-glove-landing.html';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // Auto-save on content change
+        document.addEventListener('input', function(e) {
+            if (e.target.hasAttribute('contenteditable')) {
+                // Debounce auto-save
+                clearTimeout(window.autoSaveTimeout);
+                window.autoSaveTimeout = setTimeout(saveContent, 1000);
+            }
+        });
+    </script>
+</body>
+</html>
